@@ -1,5 +1,5 @@
 import {Asteroid} from './asteroid';
-import {line, Line} from './line';
+import {createLine, Line} from './line';
 
 export interface SpaceCallback {
     (space: Space): any
@@ -45,7 +45,7 @@ function calculateLines(asteroids:Asteroid[]):Line[] {
         asteroids.slice(index+1).forEach((asteroid2:Asteroid) => {
             const indicator = calculateDistanceIndicator(asteroid1, asteroid2, 4);
             if (indicator > 0) {
-                lines.push(line(asteroid1.position, asteroid2.position, indicator));
+                lines.push(createLine(asteroid1.position, asteroid2.position, indicator));
             }
         });
     });
