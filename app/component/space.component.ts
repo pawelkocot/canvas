@@ -6,7 +6,7 @@ import {createSpaceAnimation, SpaceAnimation} from '../canvas/space-animation';
 import {createVector} from '../utils/vector/vector.class';
 import range from '../utils/functions/range';
 import random from '../utils/functions/random';
-import {createThumbnail} from '../canvas/thumbnail';
+import {createSpaceThumbnail} from '../canvas/space-thumbnail';
 import {SnapshotComponent} from './snapshot.component';
 
 @Component({
@@ -48,7 +48,7 @@ export class SpaceComponent {
     }
 
     snapshot(space:Space) {
-        this.snapshots.push(createSnapshot(space, createThumbnail(this.canvas, 1/4)));
+        this.snapshots.push(createSnapshot(space, createSpaceThumbnail(space, 1/4)));
     }
 
     restoreSnapshot(snapshot:Snapshot) {
