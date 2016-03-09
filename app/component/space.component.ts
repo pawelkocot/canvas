@@ -3,7 +3,7 @@ import {createSpace, Space} from '../model/space';
 import {createAsteroid} from '../model/asteroid';
 import {createSnapshot, Snapshot} from '../model/snapshot';
 import {createSpaceAnimation, SpaceAnimation} from '../canvas/space-animation';
-import {createVector} from '../utils/vector/vector.class';
+import {createVector} from '../utils/vector/vector';
 import range from '../utils/functions/range';
 import random from '../utils/functions/random';
 import {createSpaceThumbnail} from '../canvas/space-thumbnail';
@@ -28,9 +28,9 @@ export class SpaceComponent {
     private height = 500;
     private animation:SpaceAnimation;
     private canvas:HTMLCanvasElement;
-    private snapshots = [];
+    private snapshots:Snapshot[] = [];
 
-    constructor(private el: ElementRef) {}
+    constructor(private el:ElementRef) {}
 
     ngOnInit() {
         this.canvas = this.el.nativeElement.querySelector('#space');
@@ -54,7 +54,6 @@ export class SpaceComponent {
     restoreSnapshot(snapshot:Snapshot) {
         this.animation.space = snapshot.space;
     }
-
 
     private createRandomSpace():Space {
         const asteroids = [];

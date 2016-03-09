@@ -1,4 +1,4 @@
-import {Vector} from '../utils/vector/vector.class';
+import {Vector} from '../utils/vector/vector';
 
 export function createLine(position1:Vector, position2:Vector, indicator:number):Line {
     return new Line(position1, position2, indicator);

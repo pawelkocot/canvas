@@ -1,4 +1,4 @@
-import {Vector, createVector} from '../utils/vector/vector.class';
+import {Vector, createVector} from '../utils/vector/vector';
 import {SpaceDimensions} from '../model/space';
 
 export function createAsteroid(radius:number, position:Vector, velocity:Vector, previousPosition:Vector = null):Asteroid {
