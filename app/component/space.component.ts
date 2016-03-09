@@ -27,15 +27,14 @@ export class SpaceComponent {
     private width = 1200;
     private height = 500;
     private animation:SpaceAnimation;
-    private canvas:HTMLCanvasElement;
     private snapshots:Snapshot[] = [];
 
     constructor(private el:ElementRef) {}
 
     ngOnInit() {
-        this.canvas = this.el.nativeElement.querySelector('#space');
+        const canvas = this.el.nativeElement.querySelector('#space');
 
-        this.animation = createSpaceAnimation(this.canvas.getContext('2d'), this.createRandomSpace());
+        this.animation = createSpaceAnimation(canvas.getContext('2d'), this.createRandomSpace());
         this.animation.start();
     }
 
