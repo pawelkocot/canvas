@@ -19,8 +19,8 @@ function clear(context:CanvasRenderingContext2D, space:Space) {
 function drawAsteroid(context:CanvasRenderingContext2D, asteroid:Asteroid) {
     context.beginPath();
     context.arc(asteroid.position.x, asteroid.position.y, asteroid.radius, 0, 2*Math.PI, false);
-    context.fillStyle = 'rgba(177,29,23,0.7)';
 
+    context.fillStyle = 'rgba(177,29,23,0.7)';
     context.strokeStyle = 'rgba(10,10,10,0.6)';
     context.lineWidth = 1;
 

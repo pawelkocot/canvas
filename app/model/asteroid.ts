@@ -20,7 +20,7 @@ export class Asteroid {
         return this._previousPosition;
     }
 
-    moveWithinSpace(spaceDimensions:SpaceDimensions) {
+    moveWithinSpace(spaceDimensions:SpaceDimensions):Asteroid {
         const newPosition = this.position.add(this.velocity);
         let position = newPosition;
         let velocity = this.velocity;
