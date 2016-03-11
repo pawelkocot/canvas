@@ -6,7 +6,6 @@ import {createSpaceAnimation, SpaceAnimation} from '../canvas/space-animation';
 import {createVector} from '../utils/vector/vector';
 import range from '../utils/functions/range';
 import random from '../utils/functions/random';
-import {createSpaceThumbnail} from '../canvas/space-thumbnail';
 import {SnapshotComponent} from './snapshot.component';
 
 @Component({
@@ -15,6 +14,7 @@ import {SnapshotComponent} from './snapshot.component';
         <button (click)='toggleAnimation()'>{{ animation.isRunning ? 'stop' : 'start' }}</button>
         <button (click)='snapshot(animation.space)'>snapshot</button>
         <button (click)='resetSpace()'>reset</button>
+        <button (click)='toggleFps()'>30/60fps</button>current: {{animation.fps}}fps
         <hr />
         <canvas id='space' width='{{ width }}' height='{{ height }}' style='border: 1px solid black;'></canvas>
         <div class='snapshots'>
@@ -36,6 +36,8 @@ export class SpaceComponent {
 
         this.animation = createSpaceAnimation(canvas.getContext('2d'), this.createRandomSpace());
         this.animation.start();
+
+        //setInterval(() => this.snapshot(this.animation.space), 1000*30);
     }
 
     resetSpace() {
@@ -47,18 +49,23 @@ export class SpaceComponent {
     }
 
     snapshot(space:Space) {
-        this.snapshots.push(createSnapshot(space, createSpaceThumbnail(space, 1/4)));
+        this.snapshots.push(createSnapshot(space));
     }
 
     restoreSnapshot(snapshot:Snapshot) {
         this.animation.space = snapshot.space;
     }
 
+    toggleFps() {
+        this.animation.fps = this.animation.fps == 30 ? 60 : 30;
+    }
+
     private createRandomSpace():Space {
+        const s = 3; // max speed
         const asteroids = [];
-        range(35, 1190, 160).forEach(i => {
-            range(35, 490, 160).forEach(j => {
-                asteroids.push(createAsteroid(random(10, 30), createVector(i, j), createVector(random(-1, 1), random(-1, 1))));
+        range(35, 1190, 150).forEach(i => {
+            range(35, 490, 140).forEach(j => {
+                asteroids.push(createAsteroid(random(10, 30), createVector(i, j), createVector(random(-s, s), random(-s, s))));
             });
         });
 

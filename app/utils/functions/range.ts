@@ -1,14 +1,8 @@
-export default function(start, stop, step):number[] {
-    if (stop == null) {
-        stop = start || 0;
-        start = 0;
-    }
-    step = step || 1;
+export default function(start:number, stop:number, step:number = 1):number[] {
+    const length = Math.max(Math.ceil((stop - start) / step), 0);
+    const range = Array(length);
 
-    var length = Math.max(Math.ceil((stop - start) / step), 0);
-    var range = Array(length);
-
-    for (var idx = 0; idx < length; idx++, start += step) {
+    for (let idx = 0; idx < length; idx++, start += step) {
         range[idx] = start;
     }
 

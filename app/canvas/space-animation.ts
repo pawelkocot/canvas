@@ -4,13 +4,32 @@ import {draw} from '../canvas/space-drawing';
 export class SpaceAnimation {
     private running = false;
     private drawingCallback:SpaceCallback;
+    private allowedFps:number[] = [30, 60];
     private _forcedSpace:Space;
+    private _animationFrame = true;
+    private _fps:number = 60;
 
-    constructor(context:CanvasRenderingContext2D, private _space:Space) {
+    constructor(context:CanvasRenderingContext2D, private _space:Space, fps:number = 60) {
         this.drawingCallback = draw(context);
+        this.fps = fps;
     }
 
     get isRunning():boolean { return this.running }
+    get fps():number {return this._fps; }
+
+    get animationFrame():boolean {
+        this._animationFrame = !this._animationFrame;
+
+        return this._animationFrame;
+    }
+
+    set fps(fps:number) {
+        if (this.allowedFps.indexOf(fps) === -1) {
+            throw 'Invalid parameter "'+fps+'", allowed: '+this.allowedFps.join(' ');
+        }
+
+        this._fps = fps;
+    }
 
     get space():Space {
         if (this._forcedSpace) {
@@ -51,10 +70,23 @@ export class SpaceAnimation {
     private animate(once = false) {
         if (this.running || once) {
             window.requestAnimationFrame(() => {
-                this._space = this.space.move();
-                this.drawingCallback(this._space);
+                this.handleFrame();
                 this.animate();
             });
+        }
+    }
+
+    private handleFrame() {
+        if (this.fps == 30) {
+            // 30fps - one frame for calculation, one for drawing
+            if (this.animationFrame) {
+                this.drawingCallback(this._space);
+            } else {
+                this._space = this.space.move();
+            }
+        } else {
+            this._space = this.space.move();
+            this.drawingCallback(this._space);
         }
     }
 }

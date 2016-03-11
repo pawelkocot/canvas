@@ -28,19 +28,25 @@ export class Space {
     move():Space {
         let asteroids = this.asteroids.map((asteroid:Asteroid) => asteroid.moveWithinSpace(this.dimensions));
 
-        asteroids = asteroids.map((asteroid:Asteroid) => {
-            asteroids.filter(asteroid2 => asteroid !== asteroid2).forEach((asteroid2:Asteroid) => asteroid = asteroid.handleCollisionWith(asteroid2));
-
-            return asteroid;
-        });
+        asteroids = handleCollisions(handleCollisions(asteroids)); // double collision check :/
 
         return createSpace(this._width, this._height, asteroids, calculateLines(asteroids));
     }
 }
 
+function handleCollisions(asteroids:Asteroid[]):Asteroid[] {
+    asteroids = asteroids.map((asteroid:Asteroid) => {
+        asteroids.filter(asteroid2 => asteroid !== asteroid2).forEach((asteroid2:Asteroid) => asteroid = asteroid.handleCollisionWith(asteroid2));
+
+        return asteroid;
+    });
+
+    return asteroids;
+}
+
 function calculateLines(asteroids:Asteroid[]):Line[] {
     const lines = [];
-    //return lines;
+
     asteroids.forEach((asteroid1:Asteroid, index) => {
         asteroids.slice(index+1).forEach((asteroid2:Asteroid) => {
             const indicator = calculateDistanceIndicator(asteroid1, asteroid2, 4);
@@ -61,5 +67,3 @@ function calculateDistanceIndicator(asteroid1:Asteroid, asteroid2:Asteroid, dist
 
     return (Math.round(value * 100) / 100);
 }
-
-
